@@ -9,7 +9,7 @@
     // Data wire is plugged into pin D3 on the ESP8266
     #define ONE_WIRE_BUS D3
     
-    #define INFLUXDB_HOST "192.168.1.89:8089"   //Enter IP of device running Influx Database
+    #define INFLUXDB_HOST "192.168.1.89:8089"   //Enter IP:port of device running Influx Database
     #define WIFI_SSID "ssid"              //Enter SSID of your WIFI Access Point
     #define WIFI_PASS "password"          //Enter Password of your WIFI Access Point
 
@@ -86,6 +86,7 @@
 
       float temp;
       do {
+             DS18B20.setResolution(12);
              DS18B20.requestTemperatures();
              temp = DS18B20.getTempCByIndex(index);
           } while (temp == 85.0 || temp == (-127.0));
@@ -95,7 +96,6 @@
 
 
     void loop() {
-
       temp_IN = getTemperature(1);
       temp_OUT = getTemperature(0);
       temp_HOME = bme.readTemperature();
